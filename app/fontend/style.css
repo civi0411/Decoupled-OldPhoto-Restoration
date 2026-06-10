@@ -1,0 +1,212 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    font-family: 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+}
+
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: transparent;
+}
+
+.stars::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    background: transparent;
+    box-shadow: 200px 100px #fff, 400px 300px #fff, 800px 200px #fff, 1200px 400px #fff, 1000px 600px #fff;
+    opacity: 0.3;
+    animation: twinkle 5s infinite alternate;
+}
+
+@keyframes twinkle {
+    from {
+        opacity: 0.1;
+    }
+
+    to {
+        opacity: 0.5;
+    }
+}
+
+.card-glass {
+    background: rgba(20, 20, 35, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4);
+}
+
+.header-title h1 {
+    letter-spacing: 2px;
+    background: -webkit-linear-gradient(#fff, #88b0ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Khu vực làm việc chính */
+.workspace-container {
+    position: relative;
+    width: 100%;
+    height: 700px;
+    background: #050508;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* UI Overlay (Tải ảnh) */
+.overlay-ui {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    transition: 0.3s;
+}
+
+.overlay-ui:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.tracking-wide {
+    letter-spacing: 4px;
+}
+
+/* Canvas Hạt */
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 15;
+    pointer-events: none;
+}
+
+/* Cấu trúc ảnh */
+.img-full {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: filter 0.5s ease;
+}
+
+/* KHUNG ẢNH MỚI CHỨA HIỆU ỨNG GLOW */
+.img-after-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    /* Xóa đường kẻ cứng, thay bằng hiệu ứng ánh sáng hắt ra từ viền */
+    border-right: none;
+    box-shadow: 5px 0 25px rgba(136, 176, 255, 0.6);
+    z-index: 5;
+}
+
+/* Hiệu ứng mờ khi đang xử lý model */
+.is-processing {
+    filter: blur(8px) brightness(0.6);
+}
+
+/* Nút START chìm */
+.btn-start {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 15px 50px;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    border-radius: 50px;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.3s;
+    box-shadow: 0 0 20px rgba(136, 176, 255, 0.2);
+}
+
+.btn-start:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #88b0ff;
+    box-shadow: 0 0 30px rgba(136, 176, 255, 0.5);
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+/* ==========================================
+   THANH TRƯỢT SO SÁNH "LASER SCANNER"
+========================================== */
+.slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: col-resize;
+    z-index: 25;
+}
+
+.slider-button {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 40px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transform: translateX(-50%);
+    z-index: 24;
+}
+
+/* Tia sáng Laser chạy dọc */
+.slider-line {
+    width: 3px;
+    height: 100%;
+    background: #cddcff;
+    /* Lõi sáng */
+    box-shadow: 0 0 10px #88b0ff,
+        0 0 20px #88b0ff,
+        0 0 40px #4080ff;
+    /* Tỏa sáng 3 lớp */
+    border-radius: 2px;
+}
+
+/* Cục cầm nắm (Handle) phát sáng */
+.slider-arrow {
+    background: #090a0f;
+    color: #88b0ff;
+    padding: 8px;
+    border-radius: 50%;
+    border: 2px solid #88b0ff;
+    box-shadow: 0 0 15px rgba(136, 176, 255, 0.8),
+        inset 0 0 10px rgba(136, 176, 255, 0.5);
+    font-size: 14px;
+    font-weight: bold;
+    backdrop-filter: blur(5px);
+}

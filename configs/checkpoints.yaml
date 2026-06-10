@@ -1,0 +1,8 @@
+segmentation_r013:
+  name: r013_gen120_fixed118_local
+  type: segmentation_repair_mask
+  expected_path: checkpoints/segmenter/seg-unet-attn-r013-gen120-fixed118-local/best_val_iou.pth
+  sha256: a63381ade991cb936e2262e80fa6001c3a1fe9d10b1075be0d3c7f617c0a5725
+  threshold_balanced: 0.50
+  threshold_sensitive: 0.40
+  note: "Checkpoint is not committed. Download/copy it before running inference."

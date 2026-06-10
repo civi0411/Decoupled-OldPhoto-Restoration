@@ -1,0 +1,10 @@
+lama:
+  repo_root: F:/deeplearning/external_models/lama/lama
+  checkpoint: F:/deeplearning/external_models/lama/weights/big-lama/models/best.ckpt
+  conda_env_preferred: lama_gpu
+  conda_env_fallback: lama
+
+codeformer:
+  repo_root: F:/deeplearning/external_models/CodeFormer
+  checkpoint: F:/deeplearning/external_models/CodeFormer/weights/CodeFormer/codeformer.pth
+  conda_env: codeformer

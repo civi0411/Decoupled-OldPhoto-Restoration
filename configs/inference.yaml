@@ -1,0 +1,6 @@
+mode: r013_union_repair_wide
+face_restoration: false
+inpainting_backend: official_lama
+mask_source: union
+mask_refine: repair_wide_v1
+segmentation_threshold: 0.50
