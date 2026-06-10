@@ -216,3 +216,21 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Hệ điều hành (macOS)
+.DS_Store
+
+# Thư mục dữ liệu lớn (Tuyệt đối không nên đưa lên Git)
+data/
+
+# Python Cache & Thư mục ảo
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+.pytest_cache/
+
+# IDE cá nhân
+.idea/
+.vscode/
