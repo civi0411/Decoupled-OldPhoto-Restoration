@@ -1,68 +1,79 @@
 # Reproducibility
 
-## Demo3 Golden Case
+## Scope
 
-Golden regression case hiện tại là `examples/inputs/demo3.png`.
+Minimal reproducibility is provided for:
+- **Module 1**: segmentation via `R013_REPRO` checkpoint
+- **Core pipeline**: segmentation → hybrid mask (`repair_wide_v1`) → pretrained LaMa
+- **Regression testing**: `demo3` golden reference case
 
-Các golden artifact đi kèm:
-- `examples/golden/demo3_r013_repair_wide/final_mask.png`
-- `examples/golden/demo3_r013_repair_wide/restored_before_face.png`
-- `examples/golden/demo3_r013_repair_wide/metadata.json`
+---
 
-## Local Artifacts Required
+## R013 Audited Facts (must remain exact)
 
-Repo Git không chứa các artifact runtime sau:
-- `configs/external_paths.yaml`
-- checkpoint r013 segmentation
-- official LaMa repo và weights
-- CodeFormer repo và weights
+| Fact | Value |
+|---|---|
+| Raw dataset | 120 images |
+| Valid pairs (`masks_fixed`) | **118** (missing `real_0099`, `real_0112`) |
+| Split | **83 / 18 / 17** (train / val / test) |
+| Initialization | From `R011_REPRO` |
+| Reporting threshold | **0.50** |
+| Checkpoint SHA256 | `5f3b340e38eba8290d2b8ca030bb51126308169f4e42087f46ddac0334e74203` |
 
-Checkpoint r013 cần đặt tại:
+---
 
-```text
-checkpoints/segmenter/seg-unet-attn-r013-gen120-fixed118-local/best_val_iou.pth
-```
+## Required External Artifacts
 
-SHA256 expected:
+Configure `configs/external_paths.yaml` (copy from `configs/external_paths.example.yaml`):
 
-```text
-a63381ade991cb936e2262e80fa6001c3a1fe9d10b1075be0d3c7f617c0a5725
-```
+1. **Segmentation checkpoint** (R013):
+   ```
+   <LOCAL_ARTIFACT_ROOT>/module1_retrain_sequence/R013_REPRO/best_iou.ckpt
+   ```
+2. **Official LaMa** — pretrained Big-LaMa weights + conda env (`lama_gpu` or `lama`)
+3. **CodeFormer** (optional) — source tree + `codeformer.pth`
 
-## Readiness Check
+---
 
-Chạy trước khi smoke test:
+## Demo3 Replay
 
+### 1. Readiness check
 ```bash
-python scripts/check_readiness.py
 python scripts/check_readiness.py --strict
 ```
 
-## Replay Demo3 Mask-Bypass
-
+### 2. Auto-mask pipeline (full segmentation → inpainting)
 ```bash
-python scripts/run_pipeline.py --image examples/inputs/demo3.png --mask examples/golden/demo3_r013_repair_wide/final_mask.png --output-dir examples/outputs/pipeline_smoke_demo3 --face-mode off --reference examples/golden/demo3_r013_repair_wide/restored_before_face.png
+python scripts/run_pipeline.py \
+  --image examples/inputs/demo3.png \
+  --output-dir examples/outputs/seg_smoke_demo3 \
+  --face-mode off \
+  --reference examples/golden/demo3_r013_repair_wide/restored_before_face.png \
+  --reference-mask examples/golden/demo3_r013_repair_wide/final_mask.png
 ```
 
-Expected:
-- same_size = `True`
-- MAE = `0`
-- max_diff = `0`
-- PSNR = `inf`
+Expected outputs: `artifacts/final_mask.png`, `artifacts/inpainting/lama_restored.png`, `metadata.json`
 
-## Replay Demo3 Auto-Mask
-
+### 3. Mask-bypass pipeline (verify LaMa determinism)
 ```bash
-python scripts/run_pipeline.py --image examples/inputs/demo3.png --output-dir examples/outputs/seg_smoke_demo3 --face-mode off --reference examples/golden/demo3_r013_repair_wide/restored_before_face.png --reference-mask examples/golden/demo3_r013_repair_wide/final_mask.png
+python scripts/run_pipeline.py \
+  --image examples/inputs/demo3.png \
+  --mask examples/golden/demo3_r013_repair_wide/final_mask.png \
+  --output-dir examples/outputs/pipeline_smoke_demo3 \
+  --face-mode off \
+  --reference examples/golden/demo3_r013_repair_wide/restored_before_face.png
 ```
 
-Expected metrics gần đúng:
-- `final_mask_ratio` `0.0979878066233506`
-- `final_mask IoU vs golden` `0.9997728216844948`
-- restored `PSNR` `66.63675683358014`
+On identical GPU: `MAE = 0`, `PSNR = inf` (deterministic).
 
-## Vì Sao Checkpoint Không Nằm Trong Git
+---
 
-- Checkpoint lớn và không phù hợp để commit vào submission repo.
-- Repo submission chỉ giữ code, config template và golden artifact cần cho tái lập.
-- Việc tách checkpoint khỏi Git giúp repo nhẹ hơn và rõ ràng hơn cho người chấm.
+## Directory Layout
+
+| Path | Purpose |
+|---|---|
+| `examples/golden/` | Frozen reference outputs for regression tests |
+| `examples/outputs/` | Local replay scratch (git-ignored) |
+| `outputs/` | New inference runs (git-ignored) |
+| `artifacts/manifests/` | Provenance manifests (committed) |
+| `configs/external_paths.yaml` | Local machine paths (git-ignored) |

@@ -1,4 +1,4 @@
-"""Submission package cho old photo restoration."""
+"""Core package for modular old photo restoration."""
 
 from .pipeline import PipelineResult, RestorationPipeline
 

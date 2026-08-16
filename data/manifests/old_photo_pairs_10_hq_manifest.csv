@@ -1,0 +1,7 @@
+dataset_id,subset,count,path_hint,status,notes
+old_photo_pairs_10_hq,images,68,local_path_redacted,available_external_only,External real-photo dataset used in R010/R011/R012 lineage.
+old_photo_pairs_10_hq,masks_thin,60,local_path_redacted,available_external_only,Thin-mask segmentation target.
+old_photo_pairs_10_hq,masks_repair_v1,60,local_path_redacted,available_external_only,Repair-mask target used in R011 lineage.
+old_photo_pairs_10_hq,masks_manual,15,local_path_redacted,available_external_only,Manual-mask experimental subset used in R012 lineage.
+old_photo_pairs_10_hq,splits,0,local_path_redacted,historical_or_not_packaged,No fixed split snapshot was observed in the external dataset root during Phase 2A audit.
+

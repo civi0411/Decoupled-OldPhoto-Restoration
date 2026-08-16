@@ -16,7 +16,7 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from old_photo_restoration.config import load_config
-from old_photo_restoration.module2.lama_wrapper import LamaInpainter
+from old_photo_restoration.inpainting.lama_wrapper import LamaInpainter
 
 
 def build_parser() -> argparse.ArgumentParser:

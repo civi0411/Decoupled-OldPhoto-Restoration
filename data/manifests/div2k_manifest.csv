@@ -1,0 +1,4 @@
+dataset_id,artifact_type,role,repo_relative_path,external_source_path,count_summary,has_manifest,has_stats_json,used_for_run,git_policy,status,notes
+div2k_train_hr,external_dataset,clean_image_source,,local_path_redacted,800 images,no,no,R006|R007|R008|R009,external_do_not_commit,available_external_only,Primary clean-image source for synthetic degradation and synthetic pretraining lineage.
+div2k_valid_hr,external_dataset,clean_image_validation_source,,local_path_redacted,100 images,no,no,R006|R007|R008|R009,external_do_not_commit,available_external_only,Validation clean-image source for the synthetic lineage.
+

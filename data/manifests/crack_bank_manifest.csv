@@ -1,0 +1,3 @@
+dataset_id,artifact_type,role,repo_relative_path,external_source_path,count_summary,has_manifest,has_stats_json,used_for_run,git_policy,status,notes
+crack_bank_processed_rgba,processed_dataset,processed_crack_asset_bank,,local_path_redacted,available_count_not_verified,yes,yes,R006|R007|R008|R009,external_do_not_commit,historical_evidence_only,Processed transparent crack assets referenced by historical synthetic generation code; dataset payload is external and not committed. Repository skeleton documents expected layout only.
+

@@ -1,1 +1,1 @@
-"""Utilities cho submission."""
+"""Utilities cho project repository."""

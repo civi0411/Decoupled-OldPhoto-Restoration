@@ -1,0 +1,11 @@
+# Configuration for Synthetic Crack Generation (DIV2K + CrackForest -> ds-crack3d)
+synthesis:
+  target_size: [512, 512]
+  min_crack_width_dilation: 0
+  max_crack_width_dilation: 2
+  blend_edge_blur_sigma: 1.2
+  dark_crack_probability: 0.85
+  min_opacity: 0.65
+  max_opacity: 0.95
+  add_subtle_noise_probability: 0.30
+  noise_sigma: 5.0

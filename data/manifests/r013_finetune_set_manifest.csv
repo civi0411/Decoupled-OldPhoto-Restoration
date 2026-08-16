@@ -1,0 +1,7 @@
+dataset_id,subset,count,path_hint,status,notes
+r013_finetune_set,images,120,local_path_redacted,available_external_only,External final fine-tune images; one manifest_record file exists in the folder but 120 real images are used.
+r013_finetune_set,masks_raw,121,local_path_redacted,available_external_only,Raw masks folder exists externally.
+r013_finetune_set,masks_fixed,118,local_path_redacted,available_external_only,Missing masks_fixed for real_0099 and real_0112.
+r013_finetune_set,splits,4,local_path_redacted,available_external_only,Includes README.md plus train.txt val.txt test.txt.
+r013_finetune_set,splits_fixed,3,local_path_redacted,available_external_only,Fixed split snapshot outside repo.
+

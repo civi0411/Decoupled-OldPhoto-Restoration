@@ -1,0 +1,64 @@
+enabled: true
+method: model
+
+denoise:
+  enabled: true
+  strength: 3
+
+contrast:
+  enabled: true
+  clip_limit: 1.35
+  tile_grid_size: [8, 8]
+
+color_correction:
+  enabled: false
+  strength: 0.30
+  neutral_saturation_max: 80
+  min_neutral_pixels: 64
+  max_chroma_shift: 6.0
+
+sharpen:
+  enabled: true
+  amount: 0.12
+  sigma: 1.0
+
+safety:
+  enabled: false
+  max_mean_pixel_change: 24.0
+  max_mean_luminance_change: 10.0
+  max_mean_chroma_change: 10.0
+  min_blend_factor: 0.10
+
+model:
+  checkpoint_path: checkpoints/color_restoration/color-mixed-lab-residual-v2-r001/best.pth
+  expected_sha256: a32ff2975967d5b2cd81634c5f4ef026bb184892b10de38a70e37961f9927c91
+  device: auto
+  tile_size: 256
+  overlap: 64
+  tile_batch_size: 4
+  required_quality_mode: opencv_conservative
+
+inference_control:
+  enabled: true
+  mode: lab_protected_fixed
+  l_strength: 0.35
+  ab_strength: 0.65
+  rgb_strength: 0.60
+  chroma_thresholds: [4.0, 8.0, 12.0]
+  chroma_strengths: [0.20, 0.40, 0.60, 0.70]
+
+final_color:
+  enabled: true
+  method: ccm
+  ccm_strength: 0.45
+  ccm_max_gain_delta: 0.15
+  ccm_saturation_max: 0.55
+  ccm_luminance_percentiles: [35.0, 95.0]
+  ccm_min_sample_pixels: 256
+  chroma_match_strength: 0.35
+  chroma_match_max_shift: 8.0
+
+output:
+  image_filename: color_restored.png
+  metadata_filename: color_restoration_metadata.json
+  save_intermediates: true
